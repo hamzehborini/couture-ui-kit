@@ -57,7 +57,7 @@ export function About() {
             <div aria-hidden className="absolute -bottom-6 -right-6 h-full w-full rounded-2xl border border-[var(--gold-soft)]" />
             <div className="relative overflow-hidden rounded-2xl">
               <img
-                src="https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=1400&q=80"
+                src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1400&q=80"
                 alt="A master tailor hand-stitching a suit lapel"
                 className="h-[520px] w-full object-cover sm:h-[640px]"
               />
