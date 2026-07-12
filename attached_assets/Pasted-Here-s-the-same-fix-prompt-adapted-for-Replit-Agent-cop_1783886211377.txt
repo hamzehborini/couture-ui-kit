@@ -1,0 +1,43 @@
+Here's the same fix prompt adapted for Replit Agent — copy everything below and paste it:
+
+Fix the following three problems in my luxury tailor website. Do not rebuild the app or change the structure — only apply these specific changes.
+1. Product Images — Each Suit Must Show Consistent Photos of the SAME Suit
+Right now products display random, unrelated menswear photos (one product even shows a white t-shirt, and the "Golden Signature Suit" card has a broken image). Fix it like this:
+
+In the products data file (products.ts or wherever mock data lives), each product's images array must contain 3–4 photos that plausibly show the same suit — same color, same style. Never mix a navy suit thumbnail with a black tuxedo main image, and never include t-shirts or casual clothing.
+Since we're using stock images, use this approach: pick ONE strong hero image per suit, then create the gallery by reusing that same image with different crop parameters (e.g., Unsplash URLs with different &w=, &h=, &fit=crop, &crop= values) so thumbnails look like detail shots of the same garment — lapel crop, torso crop, full shot.
+The image must match the product name and color: "Uber White Shawl Lapel Tuxedo" → white/ivory tuxedo; "Super Black Shawl Lapel Tuxedo" → black tuxedo; "Royal Navy Prestige" → navy suit; "Imperial Black Edition" → black suit — and so on for all 8 products.
+Prefer suits on mannequins or clean studio shots with dark, moody atelier backgrounds — not lifestyle street photos.
+Test that every image URL actually loads in the preview. Add an onError fallback on all <img> tags that swaps to the product's first image, and set descriptive alt text.
+
+2. Currency — Change USD to JOD
+
+Change all pricing from USD to Jordanian Dinar (JOD).
+Create a single formatPrice utility and use it EVERYWHERE (product cards, modal, cart items, summary, totals):
+
+tsexport const formatPrice = (amount: number) =>
+  new Intl.NumberFormat("en-JO", {
+    style: "currency",
+    currency: "JOD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+Adjust mock prices to realistic premium JOD values (roughly 1,200–3,200 JOD).
+Update shipping logic to JOD: complimentary above 1,500 JOD, otherwise 35 JOD. Tax stays 8%. All amounts displayed through formatPrice.
+Search the whole codebase and remove every hardcoded "$" symbol.
+
+3. Styling — Enforce This Luxury Design System Strictly
+The current design is too generic. Apply this exactly, across ALL components:
+
+Backgrounds: near-black #0A0A0B; card surfaces #121214 with 1px borders rgba(255,255,255,0.06) — no flat gray boxes.
+Gold accent must be muted champagne #C6A15B (never bright yellow-gold), used only for: prices, active/selected states, thin divider lines, hover borders, and primary CTA buttons.
+Headings: serif font (Playfair Display or Cormorant Garamond, weight 400–500). Body/UI: Inter or Manrope. Load via Google Fonts.
+Every section gets a small uppercase gold "eyebrow" label with wide letter-spacing above its serif heading (e.g., THE COLLECTION, OUR HERITAGE).
+Suit cards: image in an overflow-hidden rounded container with slow zoom on hover (scale 1 → 1.05 over 700ms), a dark gradient rising on hover with a gold-outlined "View Details" pill fading in, card border shifting to faint gold on hover, price in champagne gold. Do NOT truncate descriptions with "..." mid-sentence — clamp cleanly to 2 lines using line-clamp-2.
+Product modal: dark charcoal surface, backdrop black at 70% opacity with backdrop-blur, fade + scale opening animation, active thumbnail gets a gold border, clicking thumbnails crossfades the main image.
+All animations slow and elegant (0.6–0.9s, ease [0.22, 1, 0.36, 1]), staggered fade-up reveals on scroll. Nothing bouncy.
+Buttons: primary = champagne gold fill with dark text and subtle hover lift; secondary = ghost with thin border. Consistent everywhere.
+Thin 1px gold divider lines between major sections, generous whitespace.
+
+When done, verify in the running preview: every product modal shows 3–4 thumbnails of the same suit, all prices display in JOD, no broken images, and the design matches the champagne-gold luxury system above.

@@ -25,7 +25,16 @@ export function CartItem({ item }: { item: CartItemType }) {
       className="flex flex-col gap-6 border-b border-white/5 py-8 sm:flex-row sm:items-center"
     >
       <div className="h-32 w-24 shrink-0 overflow-hidden rounded-lg bg-black sm:h-36 sm:w-28">
-        <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover" />
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className="h-full w-full object-cover"
+          onError={(e) => {
+            const img = e.currentTarget;
+            img.onerror = null;
+            img.src = "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=200&h=280&q=80";
+          }}
+        />
       </div>
 
       <div className="flex flex-1 flex-col gap-2">

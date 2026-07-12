@@ -85,6 +85,11 @@ export function ProductModal({ product, open, onOpenChange }: Props) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    img.onerror = null;
+                    img.src = product.images[0];
+                  }}
                 />
               </AnimatePresence>
 
@@ -117,7 +122,16 @@ export function ProductModal({ product, open, onOpenChange }: Props) {
                       active ? "border-[var(--gold)]" : "border-white/10 opacity-60 hover:opacity-100",
                     )}
                   >
-                    <img src={src} alt="" className="h-full w-full object-cover" />
+                    <img
+                      src={src}
+                      alt={`${product.name} view ${i + 1}`}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        img.onerror = null;
+                        img.src = product.images[0];
+                      }}
+                    />
                   </button>
                 );
               })}

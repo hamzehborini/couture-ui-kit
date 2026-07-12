@@ -6,7 +6,7 @@ import { formatPrice } from "@/lib/format";
 export function CartSummary() {
   const { subtotal } = useCart();
   const navigate = useNavigate();
-  const shipping = subtotal > 2000 ? 0 : 50;
+  const shipping = subtotal > 1500 ? 0 : 35;
   const tax = Math.round(subtotal * 0.08);
   const total = subtotal + shipping + tax;
 
